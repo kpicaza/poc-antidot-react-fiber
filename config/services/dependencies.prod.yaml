@@ -1,0 +1,38 @@
+services:
+  App\Application\Http\Handler\HomePage:
+  App\Application\Http\Middleware\HelloWorld:
+#  App\Application\Http\Handler\SomeTestClass:
+#    arguments:
+#      $dispatcher: '@another.dispatcher'
+  App\Application\EventListener\SomeEventListener:
+    tags:
+      - { name: 'event_listener', event: 'App\Application\Event\SomeEvent' }
+
+#  another.dispatcher:
+#    factory: Antidot\Event\Container\EventDispatcherFactory
+#
+  some.command:
+    class: App\Application\Command\SomeCommandExample
+    tags:
+      - { name: 'console.command', command: 'my:custom:command' }
+
+  React\Http\Server:
+    factory: App\Container\ServerFactory
+
+  React\EventLoop\LoopInterface:
+    factory: App\Container\FiberLoopFactory
+
+parameters:
+  debug: false
+  config_cache_enabled: true
+  monolog:
+    handlers:
+      default:
+        type: 'stream'
+        options:
+          stream: 'var/log/%date%-default.log'
+          level: 400
+  server:
+    max_concurrency: 512
+    buffer_size: 4096
+    workers: 16

@@ -1,0 +1,17 @@
+/composer.lock
+
+/config/autoload/*.local.php
+/config/development.config.php
+/config/services/*.dev.yaml
+
+/vendor
+/var/cache/*
+!/var/cache/.gitkeep
+/var/log/*
+!/var/log/.gitkeep
+
+/.idea
+/*.iml
+/.phpunit.result.cache
+
+/modules
