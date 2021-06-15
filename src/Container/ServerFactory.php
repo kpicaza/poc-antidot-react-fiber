@@ -8,6 +8,7 @@ use Antidot\Application\Http\Application;
 use Antidot\React\ReactApplication;
 use Assert\Assertion;
 use Psr\Container\ContainerInterface;
+use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use React\EventLoop\LoopInterface;
 use React\Http\Middleware\LimitConcurrentRequestsMiddleware;
@@ -26,7 +27,7 @@ final class ServerFactory
         $application = $container->get(Application::class);
         Assertion::isInstanceOf($application, ReactApplication::class);
         /** @var FiberLoop $loop */
-        $loop = $container->get(LoopInterface::class);
+        $loop = $container->get(FiberLoop::class);
         /** @var array<string, array> $globalConfig */
         $globalConfig = $container->get('config');
         /** @var array<string, int|null> $config */

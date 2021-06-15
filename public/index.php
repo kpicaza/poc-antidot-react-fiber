@@ -24,9 +24,11 @@ ini_set('memory_limit', '512M');
     $serverConfig = $globalConfig['server'];
 
     $loop = $container->get(FiberLoop::class);
+    new \App\Container\Async($loop);
     $serverInstance = static function () use ($container) {
         $server = $container->get(Server::class);
         $server->on('error', static function ($err) use ($container) {
+            dump($err);
             $logger = $container->get(LoggerInterface::class);
             $logger->critical($err);
         });

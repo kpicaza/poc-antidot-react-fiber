@@ -5,34 +5,33 @@ declare(strict_types=1);
 namespace App\Application\Http\Handler;
 
 use App\Application\Event\SomeEvent;
+use App\Container\Async;
 use Laminas\Diactoros\Response\JsonResponse;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
-use Trowski\ReactFiber\FiberLoop;
 use function React\Promise\resolve;
 
-class HomePage implements RequestHandlerInterface
+final class HomePage implements RequestHandlerInterface
 {
     public function __construct(
         private EventDispatcherInterface $eventDispatcher,
-        private FiberLoop $loop
     ) {
     }
 
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
         $eventDispatcher = $this->eventDispatcher;
-        $this->loop->await(resolve($eventDispatcher->dispatch(SomeEvent::occur())));
+        Async::await(resolve($eventDispatcher->dispatch(SomeEvent::occur())));
 
-        $message = $this->loop->await(resolve(sprintf(
+        $message = Async::await(resolve(sprintf(
             'Hello %s!!!! Welcome to Antidot Framework Starter',
-            $this->loop->await(resolve($request->getAttribute('greet')))
+            Async::await(resolve($request->getAttribute('greet')))
         )));
 
         return new JsonResponse([
-            'docs' => 'https://antidotfw.io',
+            'docs' => Async::await(resolve('https://antidotfw.io')),
             'message' => $message
         ]);
     }

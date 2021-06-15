@@ -19,7 +19,7 @@ services:
   React\Http\Server:
     factory: App\Container\ServerFactory
 
-  React\EventLoop\LoopInterface:
+  Trowski\ReactFiber\FiberLoop:
     factory: App\Container\FiberLoopFactory
 
 parameters:
@@ -35,4 +35,4 @@ parameters:
   server:
     max_concurrency: 512
     buffer_size: 4096
-    workers: 16
+    workers: 8
