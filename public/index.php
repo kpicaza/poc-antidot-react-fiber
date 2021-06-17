@@ -13,7 +13,7 @@ use Trowski\ReactFiber\FiberLoop;
 
 require 'vendor/autoload.php';
 
-ini_set('memory_limit', '512M');
+ini_set('memory_limit', '-1');
 
 (static function () {
     $container = require 'config/container.php';

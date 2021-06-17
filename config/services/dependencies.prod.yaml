@@ -1,20 +1,8 @@
 services:
   App\Application\Http\Handler\HomePage:
   App\Application\Http\Middleware\HelloWorld:
-#  App\Application\Http\Handler\SomeTestClass:
-#    arguments:
-#      $dispatcher: '@another.dispatcher'
-  App\Application\EventListener\SomeEventListener:
-    tags:
-      - { name: 'event_listener', event: 'App\Application\Event\SomeEvent' }
-
-#  another.dispatcher:
-#    factory: Antidot\Event\Container\EventDispatcherFactory
-#
-  some.command:
-    class: App\Application\Command\SomeCommandExample
-    tags:
-      - { name: 'console.command', command: 'my:custom:command' }
+  App\Application\Http\Handler\ListToggles:
+  App\Application\Http\Handler\GetToggle:
 
   React\Http\Server:
     factory: App\Container\ServerFactory
@@ -30,9 +18,9 @@ parameters:
       default:
         type: 'stream'
         options:
-          stream: 'var/log/%date%-default.log'
+          stream: 'php://stdout'
           level: 400
   server:
     max_concurrency: 512
-    buffer_size: 4096
-    workers: 8
+    buffer_size: 256
+    workers: 4

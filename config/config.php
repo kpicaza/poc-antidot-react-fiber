@@ -7,6 +7,7 @@ use Antidot\SymfonyConfigTranslator\Container\Config\ConfigAggregator;
 use Antidot\Yaml\YamlConfigProvider;
 use Laminas\ConfigAggregator\ArrayProvider;
 use Laminas\ConfigAggregator\PhpFileProvider;
+use App\Container\ToggleConfigProvider;
 
 // To enable or disable caching, set the `ConfigAggregator::ENABLE_CACHE` boolean in
 // `config/autoload/local.php`.
@@ -15,6 +16,7 @@ $cacheConfig = [
 ];
 
 $aggregator = new ConfigAggregator([
+    ToggleConfigProvider::class,
     \Laminas\HttpHandlerRunner\ConfigProvider::class,
     \Laminas\Diactoros\ConfigProvider::class,
     \Antidot\React\PSR15\Container\Config\ConfigProvider::class,

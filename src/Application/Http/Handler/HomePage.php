@@ -15,16 +15,8 @@ use function React\Promise\resolve;
 
 final class HomePage implements RequestHandlerInterface
 {
-    public function __construct(
-        private EventDispatcherInterface $eventDispatcher,
-    ) {
-    }
-
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
-        $eventDispatcher = $this->eventDispatcher;
-        Async::await(resolve($eventDispatcher->dispatch(SomeEvent::occur())));
-
         $message = Async::await(resolve(sprintf(
             'Hello %s!!!! Welcome to Antidot Framework Starter',
             Async::await(resolve($request->getAttribute('greet')))
