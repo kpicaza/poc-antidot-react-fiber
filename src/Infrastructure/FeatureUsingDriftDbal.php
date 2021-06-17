@@ -6,7 +6,6 @@ namespace App\Infrastructure;
 
 use Drift\DBAL\Connection;
 use Drift\DBAL\Result;
-use JetBrains\PhpStorm\Pure;
 use Pheature\Core\Toggle\Read\Feature;
 use Pheature\Core\Toggle\Read\FeatureFinder;
 use Pheature\Core\Toggle\Read\ToggleStrategies;
@@ -23,11 +22,13 @@ final class FeatureUsingDriftDbal implements FeatureFinder
     public function all(?Identity $identity = null): array
     {
         /** @var Result $result */
-        $result = $this->loop->await($this->connection->queryBySQL(
-            <<<SQL
-                SELECT * FROM pheature_toggles
-            SQL
-        ));
+        $result = $this->loop->await(
+            $this->connection->queryBySQL(
+                <<<SQL
+                    SELECT * FROM pheature_toggles
+                SQL
+            )
+        );
 
         $features = [];
         foreach ($result->fetchAllRows() as $row) {

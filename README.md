@@ -3,6 +3,7 @@ Reactive Antidot Framework
 
 * PHP >=8.1.0alpha1
 * [ReactPHP](https://github.com/reactphp)
+* [React Fiber](https://github.com/trowski/react-fiber)
 * [Antidot Framework](https://github.com/antidot-framework)
 * [Drift DBAL](https://github.com/driftphp/reactphp-dbal)
 * [Pheature Flags](https://github.com/pheature-flags/pheature-flags)
@@ -19,7 +20,7 @@ composer install --ignore-platform-reqs
 docker-compose up --build
 ````
 
-Open your browser at `http://127.0.0.1:5555`
+Open your browser at `http://127.0.0.1:5555/features`
 
 ### Routes
 

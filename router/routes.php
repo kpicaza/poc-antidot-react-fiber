@@ -4,22 +4,10 @@ declare(strict_types=1);
 
 use Antidot\Application\Http\Application;
 use App\Application\Http\Handler\GetToggle;
-use App\Application\Http\Handler\HomePage;
 use App\Application\Http\Handler\ListToggles;
-use App\Application\Http\Middleware\HelloWorld;
 use Psr\Container\ContainerInterface;
 
-/**
- * Setup routes with a single request method:
- *
- * $app->get('/', [App\Handler\HomePageHandler::class], 'home');
- * $app->post('/album', [App\Handler\AlbumCreateHandler::class], 'album.create');
- * $app->put('/album/:id', [App\Handler\AlbumUpdateHandler::class], 'album.put');
- * $app->patch('/album/:id', [App\Handler\AlbumUpdateHandler::class], 'album.patch');
- * $app->delete('/album/:id', [App\Handler\AlbumDeleteHandler::class], 'album.delete');
- */
 return static function (Application $app, ContainerInterface $container) : void {
-    $app->get('/', [HelloWorld::class, HomePage::class], 'home');
     $app->get('/features', [ListToggles::class], 'get_features');
     $app->get('/features/{feature_id}', [GetToggle::class], 'get_feature_id');
 };
