@@ -1,12 +1,12 @@
 Reactive Antidot Framework
 =================
 
-[![link-packagist](https://img.shields.io/packagist/v/antidot-fw/reactive-starter.svg?style=flat-square)](https://packagist.org/packages/antidot-fw/reactive-starter)
-
-This framework is based on concepts and components of other open source software, especially 
-[Zend Expressive](https://docs.zendframework.com/zend-expressive/), 
-[Zend Stratigillity](https://docs.zendframework.com/zend-stratigility/), 
-[Recoil](https://github.com/recoilphp/recoil) and [React PHP](https://reactphp.org/).
+* PHP >=8.1.0alpha1
+* [ReactPHP](https://github.com/reactphp)
+* [Antidot Framework](https://github.com/antidot-framework)
+* [Drift DBAL](https://github.com/driftphp/reactphp-dbal)
+* [Pheature Flags](https://github.com/pheature-flags/pheature-flags)
+* [PostgreSQL](https://www.postgresql.org/)
 
 ## Installation
 
@@ -15,10 +15,16 @@ Install a project using [composer](https://getcomposer.org/download/) package ma
 ````bash
 git clone git@github.com:kpicaza/poc-antidot-react-fiber.git dev
 mv dev/.* dev/* ./ && rmdir dev
-php public/index.php
+composer install --ignore-platform-reqs
+docker-compose up --build
 ````
 
-Open your browser on port `8080`
+Open your browser at `http://127.0.0.1:5555`
+
+### Routes
+
+* Get evaluated list of feature toggles => **/features**
+* Get an evaluated feature flags => **/features/{feature_id}**
 
 ## Config
 
@@ -30,9 +36,9 @@ Default config
 parameters:
     server:
       host: '0.0.0.0'
-      port: '8080'
-      max_concurrency: 100
-      buffer_size: 4194304
+      port: '5555'
+      max_concurrency: 512
+      buffer_size: 256
       workers: 4
 
 ```
@@ -49,10 +55,4 @@ Or you can do it by hand renaming from `config/services/dependencies.dev.yaml.di
 
 ````bash
 mv config/services/dependencies.dev.yaml.dist config/services/dependencies.dev.yaml
-````
-
-### Run server
-
-````bash
-php public/index.php
 ````

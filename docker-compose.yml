@@ -2,7 +2,7 @@ version: "3"
 
 volumes:
   redis:
-  app:
+  postgres_data:
 
 services:
   php:
@@ -24,10 +24,10 @@ services:
       - redis:/var/lib/redis
 
   postgres:
-    image: 'postgres:13.3'
+    build: ./docker/postgres/
     restart: always
     volumes:
-      - './postgres_data:/var/lib/postgresql/data'
+      - postgres_data:/var/lib/postgresql/data
     environment:
       - POSTGRES_PASSWORD=secret
     ports:
