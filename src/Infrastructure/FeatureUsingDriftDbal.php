@@ -6,6 +6,7 @@ namespace App\Infrastructure;
 
 use Drift\DBAL\Connection;
 use Drift\DBAL\Result;
+use Generator;
 use Pheature\Core\Toggle\Read\Feature;
 use Pheature\Core\Toggle\Read\FeatureFinder;
 use Pheature\Core\Toggle\Read\ToggleStrategies;
@@ -17,37 +18,39 @@ final class FeatureUsingDriftDbal implements FeatureFinder
     public function __construct(
         private Connection $connection,
         private FiberLoop $loop
-    ) {}
+    ) {
+    }
 
     public function all(?Identity $identity = null): array
     {
-        /** @var Result $result */
-        $result = $this->loop->await(
+        return $this->loop->await(
             $this->connection->queryBySQL(
                 <<<SQL
                     SELECT * FROM pheature_toggles
                 SQL
-            )
+            )->then(
+                fn(Result $result): Generator => yield from $result->fetchAllRows()
+            )->then(function (Generator $result): array {
+                $features = [];
+                foreach ($result as $row) {
+                    $features[] = self::hydrateFeature($row);
+                }
+
+                return $features;
+            })
         );
-
-        $features = [];
-        foreach ($result->fetchAllRows() as $row) {
-            $features[] = $row;
-        }
-
-        return array_map([self::class, 'hydrateFeature'], $features);
     }
 
     public function get(string $featureId): Feature
     {
-        $row = $this->loop->await(
+        return $this->loop->await(
             $this->connection->findOneBy(
                 'pheature_toggles',
                 ['feature_id' => $featureId]
+            )->then(
+                fn(array $row): Feature => self::hydrateFeature($row)
             )
         );
-
-        return self::hydrateFeature($row);
     }
 
     #[Pure]
@@ -60,4 +63,3 @@ final class FeatureUsingDriftDbal implements FeatureFinder
         );
     }
 }
-    

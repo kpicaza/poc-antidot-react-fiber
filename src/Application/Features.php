@@ -13,7 +13,8 @@ final class Features
     public function __construct(
         private Toggle $toggleRouter,
         private FeatureFinder $featureFinder
-    ) {}
+    ) {
+    }
 
     public function all(?string $identity = null, ?array $payload = null): array
     {
@@ -44,4 +45,3 @@ final class Features
         );
     }
 }
-    

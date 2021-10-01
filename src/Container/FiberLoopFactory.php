@@ -14,6 +14,4 @@ final class FiberLoopFactory
     {
         return new FiberLoop($container->get(LoopInterface::class));
     }
-
 }
-    

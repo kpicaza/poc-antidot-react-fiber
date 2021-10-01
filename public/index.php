@@ -6,7 +6,6 @@ declare(strict_types=1);
 use Antidot\Application\Http\Application;
 use Antidot\React\Child;
 use Psr\Log\LoggerInterface;
-use React\EventLoop\LoopInterface;
 use React\Http\Server;
 use React\Socket\Server as Socket;
 use Trowski\ReactFiber\FiberLoop;
