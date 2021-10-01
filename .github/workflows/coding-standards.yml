@@ -6,7 +6,7 @@ on:
   pull_request:
   push:
     branches:
-      - "0.0.x"
+      - "main"
 
 jobs:
   coding-standards:
@@ -17,9 +17,9 @@ jobs:
     strategy:
       matrix:
         dependencies:
-          - "locked"
+          - "experimental"
         php-version:
-          - "7.4"
+          - "8.1.0rc3"
         operating-system:
           - "ubuntu-latest"
 
@@ -54,6 +54,10 @@ jobs:
       - name: "Install locked dependencies"
         if: ${{ matrix.dependencies == 'locked' }}
         run: "composer install --no-interaction --no-progress --no-suggest"
+
+      - name: "Install experimental dependencies"
+        if: ${{ matrix.dependencies == 'experimental' }}
+        run: "composer install --no-interaction --no-progress --no-suggest --ignore-platform-reqs"
 
       - name: "Coding Standard"
         run: "vendor/bin/phpcs"
