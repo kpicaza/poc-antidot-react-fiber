@@ -14,7 +14,8 @@ final class ListToggles implements RequestHandlerInterface
 {
     public function __construct(
         private Features $features
-    ) {}
+    ) {
+    }
 
 
     public function handle(ServerRequestInterface $request): ResponseInterface
@@ -27,4 +28,3 @@ final class ListToggles implements RequestHandlerInterface
         ]);
     }
 }
-    

@@ -12,6 +12,9 @@
 
 /.idea
 /*.iml
+/.php-version
 /.phpunit.result.cache
 
 /modules
+
+/postgres_data

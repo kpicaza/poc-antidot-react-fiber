@@ -9,6 +9,6 @@ final class Feature
     public function __construct(
         public string $featureId,
         public bool $enabled
-    ) {}
+    ) {
+    }
 }
-    

@@ -16,6 +16,7 @@ $cacheConfig = [
 ];
 
 $aggregator = new ConfigAggregator([
+    \Pheature\Community\Mezzio\ToggleConfigProvider::class,
     ToggleConfigProvider::class,
     \Laminas\HttpHandlerRunner\ConfigProvider::class,
     \Laminas\Diactoros\ConfigProvider::class,

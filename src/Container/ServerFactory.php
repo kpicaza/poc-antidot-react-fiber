@@ -13,7 +13,6 @@ use React\Http\Middleware\LimitConcurrentRequestsMiddleware;
 use React\Http\Middleware\RequestBodyBufferMiddleware;
 use React\Http\Middleware\RequestBodyParserMiddleware;
 use React\Http\Server;
-use React\Promise\PromiseInterface;
 use Trowski\ReactFiber\FiberLoop;
 
 final class ServerFactory
@@ -39,12 +38,9 @@ final class ServerFactory
             new LimitConcurrentRequestsMiddleware($config['max_concurrency']),
             new RequestBodyBufferMiddleware($config['buffer_size']),
             new RequestBodyParserMiddleware(),
-            static function (ServerRequestInterface $request) use ($application, $loop) {
-                return $loop->async(fn() => $application->handle($request));
-            }
+            static fn (ServerRequestInterface $request) => $application->handle($request)
         );
 
         return $server;
     }
 }
-    

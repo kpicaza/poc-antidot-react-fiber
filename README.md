@@ -1,7 +1,7 @@
 Reactive Antidot Framework
 =================
 
-* PHP >=8.1.0alpha1
+* PHP >=8.1.0rc1
 * [ReactPHP](https://github.com/reactphp)
 * [React Fiber](https://github.com/trowski/react-fiber)
 * [Antidot Framework](https://github.com/antidot-framework)
@@ -16,7 +16,7 @@ Install a project using [composer](https://getcomposer.org/download/) package ma
 ````bash
 git clone git@github.com:kpicaza/poc-antidot-react-fiber.git dev
 mv dev/.* dev/* ./ && rmdir dev
-composer install --ignore-platform-reqs
+docker-compose run --rm composer install --ignore-platform-reqs
 docker-compose up --build
 ````
 

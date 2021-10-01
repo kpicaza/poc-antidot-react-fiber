@@ -12,11 +12,11 @@ final class StreamingRequestFiberMiddleware
 {
     public function __construct(
         private FiberLoop $loop
-    ) {}
+    ) {
+    }
 
     public function __invoke(ServerRequestInterface $request, callable $next): PromiseInterface
     {
         return $this->loop->async(static fn() => $next($request));
     }
 }
-    

@@ -11,7 +11,8 @@ final class Async
 {
     private static FiberLoop $loop;
 
-    public function __construct(FiberLoop $fiberLoop) {
+    public function __construct(FiberLoop $fiberLoop)
+    {
         static::$loop = $fiberLoop;
     }
 
@@ -22,4 +23,3 @@ final class Async
         return $loop->await($promise);
     }
 }
-    
