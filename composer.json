@@ -12,6 +12,10 @@
     {
       "type": "vcs",
       "url": "https://github.com/antidot-framework/psr11-monolog.git"
+    },
+    {
+      "type": "vcs",
+      "url": "https://github.com/kpicaza/PgAsync.git"
     }
   ],
   "require": {
@@ -37,7 +41,7 @@
     "pheature/toggle-crud-psr11-factories": "@dev",
     "pheature/toggle-model": "@dev",
     "trowski/react-fiber": "@dev",
-    "voryx/pgasync": "^2.0",
+    "voryx/pgasync": "@dev",
     "webmozart/assert": "^1.7.0",
     "wshafer/psr11-monolog": "^3.0.0|@dev"
   },
