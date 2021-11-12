@@ -73,7 +73,7 @@
     ],
     "cs-check": "phpcs src --colors",
     "cs-fix": "phpcbf src --colors",
-    "inspect": "phpstan analyse src -l7 --ansi",
+    "inspect": "phpstan analyse src -l9 --ansi",
     "test": "phpunit --colors=always",
     "watch": "php-watcher public/index.php --arguments  --delay 5 --ansi"
   },
