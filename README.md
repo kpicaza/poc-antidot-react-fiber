@@ -1,9 +1,8 @@
 Reactive Antidot Framework
 =================
 
-* PHP >=8.1.0rc1
+* PHP >=8.1.0rc6
 * [ReactPHP](https://github.com/reactphp)
-* [React Fiber](https://github.com/trowski/react-fiber)
 * [Antidot Framework](https://github.com/antidot-framework)
 * [Drift DBAL](https://github.com/driftphp/reactphp-dbal)
 * [Pheature Flags](https://github.com/pheature-flags/pheature-flags)
@@ -32,6 +31,7 @@ Open your browser at `http://127.0.0.1:5555/features`
 ### Server Config
 
 Default config
+<span id="parameters-config"></span>
 
 ```yaml
 parameters:
@@ -40,7 +40,7 @@ parameters:
       port: '5555'
       max_concurrency: 512
       buffer_size: 256
-      workers: 4
+      workers: 8
 
 ```
 
@@ -60,46 +60,48 @@ mv config/services/dependencies.dev.yaml.dist config/services/dependencies.dev.y
 
 ### Benchmark
 
-Using WRK:
+> Tested on Docker using [8 workers](#parameters-config) on Ubuntu 21.04 Memory: 32GB, Processor: Intel® Core™ i7-10875H CPU @ 2.30GHz × 16
+
+Using WRK 8 threads and 512 connections during 15 seconds:
 
 > No queries testing against "/"
 
 ```bash
-$ wrk -t8 -c512 -d15s http://127.0.0.1:5555/                                                                                                                                                                                                         [063f19b]
+$ wrk -t8 -c512 -d15s http://127.0.0.1:5555/                                                                                                                                                                                                         [7c7fb66]
 Running 15s test @ http://127.0.0.1:5555/
   8 threads and 512 connections
   Thread Stats   Avg      Stdev     Max   +/- Stdev
-    Latency    16.50ms    9.36ms 161.59ms   80.13%
-    Req/Sec     3.88k   394.54    11.57k    79.44%
-  460606 requests in 15.10s, 62.82MB read
-Requests/sec:  30505.35
-Transfer/sec:      4.16MB
+    Latency    19.76ms   11.68ms 174.07ms   96.59%
+    Req/Sec     3.39k   329.48     4.03k    76.24%
+  402837 requests in 15.06s, 54.94MB read
+Requests/sec:  26746.67
+Transfer/sec:      3.65MB
 ```
 
 > Single query no "where" statement, testing against "/features"
 
 ```bash
-$ wrk -t8 -c512 -d15s http://127.0.0.1:5555/features
+$ wrk -t8 -c512 -d15s http://127.0.0.1:5555/features                                                                                                                                                                                                 [7c7fb66]
 Running 15s test @ http://127.0.0.1:5555/features
   8 threads and 512 connections
   Thread Stats   Avg      Stdev     Max   +/- Stdev
-    Latency   269.81ms   65.74ms 486.64ms   62.69%
-    Req/Sec   236.84     87.46   555.00     71.26%
-  27987 requests in 15.05s, 15.11MB read
-Requests/sec:   1859.60
-Transfer/sec:      1.00MB
+    Latency    67.05ms   30.21ms 275.67ms   85.32%
+    Req/Sec     0.98k   232.62     1.36k    81.27%
+  116995 requests in 15.08s, 16.74MB read
+Requests/sec:   7758.05
+Transfer/sec:      1.11MB
 ```
 
 > Single query with "where" statement, testing against "/features/feature_1"
 
 ```bash
-$ wrk -t8 -c512 -d15s http://127.0.0.1:5555/features/feature_1
+$ wrk -t8 -c512 -d15s http://127.0.0.1:5555/features/feature_1                                                                                                                                                                                       [7c7fb66]
 Running 15s test @ http://127.0.0.1:5555/features/feature_1
   8 threads and 512 connections
   Thread Stats   Avg      Stdev     Max   +/- Stdev
-    Latency    54.47ms   16.15ms 153.80ms   74.33%
-    Req/Sec     1.18k   125.00     1.61k    70.36%
-  140050 requests in 15.09s, 22.57MB read
-Requests/sec:   9282.03
-Transfer/sec:      1.50MB
+    Latency    63.61ms   32.91ms 275.78ms   93.75%
+    Req/Sec     1.07k   246.84     1.31k    91.31%
+  126963 requests in 15.05s, 20.46MB read
+Requests/sec:   8433.58
+Transfer/sec:      1.36MB
 ```

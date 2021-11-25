@@ -9,11 +9,11 @@ use Antidot\React\ReactApplication;
 use Assert\Assertion;
 use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ServerRequestInterface;
+use React\EventLoop\Loop;
 use React\Http\Middleware\LimitConcurrentRequestsMiddleware;
 use React\Http\Middleware\RequestBodyBufferMiddleware;
 use React\Http\Middleware\RequestBodyParserMiddleware;
 use React\Http\Server;
-use Trowski\ReactFiber\FiberLoop;
 
 final class ServerFactory
 {
@@ -21,8 +21,6 @@ final class ServerFactory
     {
         $application = $container->get(Application::class);
         Assertion::isInstanceOf($application, ReactApplication::class);
-        /** @var FiberLoop $loop */
-        $loop = $container->get(FiberLoop::class);
         /** @var array<string, array> $globalConfig */
         $globalConfig = $container->get('config');
         /** @var array<string, int|null> $config */
@@ -33,8 +31,8 @@ final class ServerFactory
         Assertion::integer($config['buffer_size']);
 
         $server = new Server(
-            $loop,
-            new StreamingRequestFiberMiddleware($loop),
+            Loop::get(),
+            new StreamingRequestFiberMiddleware(),
             new LimitConcurrentRequestsMiddleware($config['max_concurrency']),
             new RequestBodyBufferMiddleware($config['buffer_size']),
             new RequestBodyParserMiddleware(),
