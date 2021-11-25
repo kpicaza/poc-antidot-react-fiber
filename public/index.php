@@ -6,13 +6,11 @@ declare(strict_types=1);
 use Antidot\Application\Http\Application;
 use Antidot\React\Child;
 use Psr\Log\LoggerInterface;
+use React\EventLoop\Loop;
 use React\Http\Server;
 use React\Socket\Server as Socket;
-use Trowski\ReactFiber\FiberLoop;
 
 require 'vendor/autoload.php';
-
-ini_set('memory_limit', '-1');
 
 (static function () {
     $container = require 'config/container.php';
@@ -22,8 +20,6 @@ ini_set('memory_limit', '-1');
     $globalConfig = $container->get('config');
     $serverConfig = $globalConfig['server'];
 
-    $loop = $container->get(FiberLoop::class);
-    new \App\Container\Async($loop);
     $serverInstance = static function () use ($container) {
         $server = $container->get(Server::class);
         $server->on('error', static function ($err) use ($container) {
@@ -43,5 +39,5 @@ ini_set('memory_limit', '-1');
     }
 
 
-    $loop->run();
+    Loop::get()->run();
 })();

@@ -10,18 +10,12 @@ services:
     ports:
       - 5555:5555
     links:
-      - redis
       - postgres
     volumes:
       - redis:/var/lib/redis
       - ./:/opt
     working_dir: /opt
     command: ["php", "/opt/public/index.php"]
-
-  redis:
-    image: redis:latest
-    volumes:
-      - redis:/var/lib/redis
 
   postgres:
     build: ./docker/postgres/
