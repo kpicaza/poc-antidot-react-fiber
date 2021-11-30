@@ -4,7 +4,6 @@
 declare(strict_types=1);
 
 use Antidot\Application\Http\Application;
-use Antidot\React\Child;
 use Psr\Log\LoggerInterface;
 use React\EventLoop\Loop;
 use React\Http\Server;
@@ -17,8 +16,6 @@ require 'vendor/autoload.php';
     $application = $container->get(Application::class);
     (require 'router/middleware.php')($application, $container);
     (require 'router/routes.php')($application, $container);
-    $globalConfig = $container->get('config');
-    $serverConfig = $globalConfig['server'];
 
     $serverInstance = static function () use ($container) {
         $server = $container->get(Server::class);
@@ -32,11 +29,7 @@ require 'vendor/autoload.php';
         $server->listen($socket);
     };
 
-    if (1 < $serverConfig['workers']) {
-        Child::fork($serverConfig['workers'], $serverInstance);
-    } else {
-        $serverInstance();
-    }
+    $serverInstance();
 
 
     Loop::get()->run();

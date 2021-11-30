@@ -15,7 +15,9 @@ services:
       - redis:/var/lib/redis
       - ./:/opt
     working_dir: /opt
-    command: ["php", "/opt/public/index.php"]
+    environment:
+      XDEBUG_MODE: 'off'
+    command: ["bin/console", "serve"]
 
   postgres:
     build: ./docker/postgres/
