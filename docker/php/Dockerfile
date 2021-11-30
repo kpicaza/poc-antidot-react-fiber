@@ -1,4 +1,4 @@
-FROM php:8.1.0RC6
+FROM php:8.1.0
 
 RUN apt-get update && apt-get install -y git zip zlib1g-dev libicu-dev g++ libpq-dev libxml2-dev autoconf pkg-config libssh-dev libonig-dev
 

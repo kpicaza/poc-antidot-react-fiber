@@ -9,6 +9,13 @@ services:
   Trowski\ReactFiber\FiberLoop:
     factory: App\Container\FiberLoopFactory
 
+console:
+  dependencies:
+    invokables:
+      App\Application\Cli\ServeCommand:
+  commands:
+    serve: App\Application\Cli\ServeCommand
+
 parameters:
   debug: false
   config_cache_enabled: true

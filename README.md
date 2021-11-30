@@ -15,7 +15,7 @@ Install a project using [composer](https://getcomposer.org/download/) package ma
 ````bash
 git clone git@github.com:kpicaza/poc-antidot-react-fiber.git dev
 mv dev/.* dev/* ./ && rmdir dev
-docker-compose run --rm composer install --ignore-platform-reqs
+docker-compose run --rm composer install
 docker-compose up --build
 ````
 
