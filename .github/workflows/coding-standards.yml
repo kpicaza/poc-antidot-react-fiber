@@ -19,7 +19,7 @@ jobs:
         dependencies:
           - "experimental"
         php-version:
-          - "8.1.0rc3"
+          - "8.1.0"
         operating-system:
           - "ubuntu-latest"
 
