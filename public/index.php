@@ -1,36 +1,27 @@
-#!/usr/bin/env php
 <?php
 
 declare(strict_types=1);
 
-use Antidot\Application\Http\Application;
-use Psr\Log\LoggerInterface;
-use React\EventLoop\Loop;
-use React\Http\Server;
-use React\Socket\Server as Socket;
+use Antidot\Framework\Application;
+use Antidot\Runtime\AntidotRuntime;
+use Psr\Container\ContainerInterface;
 
-require 'vendor/autoload.php';
+ini_set('memory_limit', '2048M');
 
-(static function () {
-    $container = require 'config/container.php';
+$_SERVER['APP_RUNTIME'] = AntidotRuntime::class;
+
+chdir(dirname(__DIR__));
+$rootDir = dirname(__DIR__);
+
+require_once 'vendor/autoload_runtime.php';
+
+return static function () use ($rootDir): ContainerInterface {
+    $container = require $rootDir . '/config/container.php';
     $application = $container->get(Application::class);
-    (require 'router/middleware.php')($application, $container);
-    (require 'router/routes.php')($application, $container);
 
-    $serverInstance = static function () use ($container) {
-        $server = $container->get(Server::class);
-        $server->on('error', static function ($err) use ($container) {
-            dump($err);
-            $logger = $container->get(LoggerInterface::class);
-            $logger->critical($err);
-        });
+    (require $rootDir . '/router/middleware.php')($application);
+    (require $rootDir . '/router/routes.php')($application, $container);
 
-        $socket = $container->get(Socket::class);
-        $server->listen($socket);
-    };
+    return $container;
+};
 
-    $serverInstance();
-
-
-    Loop::get()->run();
-})();

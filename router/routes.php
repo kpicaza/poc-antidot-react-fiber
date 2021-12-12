@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-use Antidot\Application\Http\Application;
+use Antidot\Framework\Application;
 use App\Application\Http\Handler\GetToggle;
 use App\Application\Http\Handler\ListToggles;
 use Psr\Container\ContainerInterface;

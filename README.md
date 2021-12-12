@@ -38,8 +38,6 @@ parameters:
     server:
       host: '0.0.0.0'
       port: '5555'
-      max_concurrency: 512
-      buffer_size: 256
       workers: 8
 
 ```
@@ -71,25 +69,11 @@ Using WRK 8 threads and 512 connections during 15 seconds:
 Running 15s test @ http://127.0.0.1:5555/
   8 threads and 512 connections
   Thread Stats   Avg      Stdev     Max   +/- Stdev
-    Latency    21.48ms    8.42ms 198.36ms   94.96%
-    Req/Sec     3.03k   371.48     4.98k    82.62%
-  359820 requests in 15.10s, 49.07MB read
-Requests/sec:  23828.18
-Transfer/sec:      3.25MB
-```
-
-> Single query no "where" statement, testing against "/features"
-
-```bash
-→ wrk -t8 -c512 -d15s http://127.0.0.1:5555/features                                                                                                                                                                                                 [defbbe7]
-Running 15s test @ http://127.0.0.1:5555/features
-  8 threads and 512 connections
-  Thread Stats   Avg      Stdev     Max   +/- Stdev
-    Latency    68.04ms   32.17ms 312.85ms   94.46%
-    Req/Sec     0.99k   179.83     1.30k    71.81%
-  117312 requests in 15.07s, 16.78MB read
-Requests/sec:   7784.07
-Transfer/sec:      1.11MB
+    Latency    18.15ms   29.96ms 292.38ms   94.44%
+    Req/Sec     5.23k     1.13k   10.32k    71.08%
+  625018 requests in 15.10s, 85.24MB read
+Requests/sec:  41395.44
+Transfer/sec:      5.65MB
 ```
 
 > Single query with "where" statement, testing against "/features/feature_1"
@@ -99,9 +83,23 @@ $ wrk -t8 -c512 -d15s http://127.0.0.1:5555/features/feature_1                  
 Running 15s test @ http://127.0.0.1:5555/features/feature_1
   8 threads and 512 connections
   Thread Stats   Avg      Stdev     Max   +/- Stdev
-    Latency    70.06ms   22.39ms 136.97ms   61.80%
-    Req/Sec     0.91k   122.49     1.21k    65.25%
-  109031 requests in 15.10s, 17.57MB read
-Requests/sec:   7221.31
-Transfer/sec:      1.16MB
+    Latency    60.51ms   27.30ms 143.04ms   71.78%
+    Req/Sec     1.06k   233.54     1.54k    66.58%
+  126979 requests in 15.09s, 20.47MB read
+Requests/sec:   8415.24
+Transfer/sec:      1.36MB
+```
+
+> Single query no "where" statement and 10 queries with "where" statement, testing against "/features"
+
+```bash
+→ wrk -t8 -c512 -d15s http://127.0.0.1:5555/features                                                                                                                                                                                                 [defbbe7]
+Running 15s test @ http://127.0.0.1:5555/features
+  8 threads and 512 connections
+  Thread Stats   Avg      Stdev     Max   +/- Stdev
+    Latency   311.21ms   84.88ms 589.97ms   62.81%
+    Req/Sec   210.71    102.44   585.00     68.21%
+  24378 requests in 15.06s, 13.16MB read
+Requests/sec:   1618.26
+Transfer/sec:      0.87MB
 ```

@@ -7,8 +7,8 @@ namespace App\Application;
 final class Feature
 {
     public function __construct(
-        public string $featureId,
-        public bool $enabled
+        public readonly string $featureId,
+        public readonly bool $enabled
     ) {
     }
 }

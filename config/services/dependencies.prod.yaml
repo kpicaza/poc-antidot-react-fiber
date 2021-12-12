@@ -3,18 +3,8 @@ services:
   App\Application\Http\Handler\ListToggles:
   App\Application\Http\Handler\GetToggle:
 
-  React\Http\Server:
-    factory: App\Container\ServerFactory
-
-  Trowski\ReactFiber\FiberLoop:
-    factory: App\Container\FiberLoopFactory
-
-console:
-  dependencies:
-    invokables:
-      App\Application\Cli\ServeCommand:
-  commands:
-    serve: App\Application\Cli\ServeCommand
+  Psr\EventDispatcher\EventDispatcherInterface:
+    factory: Antidot\Event\Container\AsyncEventDispatcherFactory
 
 parameters:
   debug: false
@@ -22,11 +12,10 @@ parameters:
   monolog:
     handlers:
       default:
-        type: 'stream'
+        type: 'echo'
         options:
-          stream: 'php://stdout'
           level: 400
   server:
-    max_concurrency: 512
-    buffer_size: 256
+    host: '0.0.0.0'
+    port: 5555
     workers: 8
