@@ -8,11 +8,14 @@ use App\Infrastructure\FeatureUsingDriftDbal;
 use Drift\DBAL\Connection;
 use Pheature\Core\Toggle\Read\ChainToggleStrategyFactory;
 use Pheature\Core\Toggle\Read\FeatureFinder;
+use Pheature\Crud\Psr11\Toggle\ChainToggleStrategyFactoryFactory;
 use Pheature\Model\Toggle\EnableByMatchingIdentityId;
 use Pheature\Model\Toggle\EnableByMatchingSegment;
 use Pheature\Model\Toggle\IdentitySegment;
 use Pheature\Model\Toggle\SegmentFactory;
+use Pheature\Model\Toggle\SegmentFactoryFactory;
 use Pheature\Model\Toggle\StrategyFactory;
+use Pheature\Model\Toggle\StrategyFactoryFactory;
 use Pheature\Model\Toggle\StrictMatchingSegment;
 use function array_merge;
 use function array_reduce;
@@ -60,9 +63,9 @@ final class ToggleConfigProvider
             'factories' => [
                 FeatureUsingDriftDbal::class => FeaturesUsingDbalFactory::class,
                 // Read model
-                StrategyFactory::class => \Pheature\Crud\Psr11\Toggle\StrategyFactory::class,
-                SegmentFactory::class => \Pheature\Crud\Psr11\Toggle\SegmentFactory::class,
-                ChainToggleStrategyFactory::class => \Pheature\Crud\Psr11\Toggle\ChainToggleStrategyFactory::class,
+                StrategyFactory::class => StrategyFactoryFactory::class,
+                SegmentFactory::class => SegmentFactoryFactory::class,
+                ChainToggleStrategyFactory::class => ChainToggleStrategyFactoryFactory::class,
                 Connection::class => ConnectionFactory::class,
             ],
             'pheature_flags' => $pheatureFlagsConfig,
@@ -75,7 +78,7 @@ final class ToggleConfigProvider
         return [
             'api_enabled' => false,
             'api_prefix' => '',
-            'driver' => 'inmemory',
+            'driver' => 'dbal',
             'segment_types' => [
                 [
                     'type' => IdentitySegment::NAME,

@@ -19,19 +19,21 @@
     }
   ],
   "require": {
-    "php": "^7.4|^8.0",
+    "php": ">=8.1",
     "ext-json": "*",
-    "antidot-fw/antidot-react-psr15": "^0.0.1",
     "antidot-fw/cli": "^1.1.0",
-    "antidot-fw/container": "^0.1.0",
+    "antidot-fw/container": "^0.1.2",
     "antidot-fw/dev-tools": "^0.1.2",
-    "antidot-fw/event-dispatcher": "^2.0.3",
-    "antidot-fw/fast-router-adapter": "^1.0.0",
+    "antidot-fw/event-dispatcher": "^2.1",
+    "antidot-fw/framework": "2.0.0BETA1",
     "antidot-fw/logger": "^1.1.0",
-    "antidot-fw/react-framework": "^1.1.1",
+    "antidot-fw/monolog-react-handler": "^0.1.0",
+    "antidot-fw/runtime": "^0.2.0",
     "antidot-fw/symfony-config-translator": "^1.1.0",
     "antidot-fw/yaml-config-provider": "^0.1.0",
     "drift/dbal": "^0.1.4",
+    "jetbrains/phpstorm-stubs": "^2021.3",
+    "laminas/laminas-diactoros": "^2.8",
     "pheature/inmemory-toggle": "^0.3.0",
     "pheature/php-sdk": "^0.3.0",
     "pheature/toggle-crud-psr7-api": "^0.3.0",
@@ -40,12 +42,14 @@
     "react/child-process": "^0.6.4",
     "voryx/pgasync": "@dev",
     "webmozart/assert": "^1.7.0",
-    "wshafer/psr11-monolog": "^3.0.0|@dev"
+    "wshafer/psr11-monolog": "@dev"
   },
   "require-dev": {
     "franzl/whoops-middleware": "^2.0",
     "phpro/grumphp": "^1.0",
+    "phpstan/extension-installer": "^1.1",
     "phpstan/phpstan": "^1.2",
+    "phpstan/phpstan-webmozart-assert": "^1.0",
     "phpunit/phpunit": "^8.0|^9.0",
     "roave/security-advisories": "dev-master",
     "squizlabs/php_codesniffer": "^3.4",
@@ -58,7 +62,7 @@
   },
   "autoload-dev": {
     "psr-4": {
-      "AppTest\\": "test"
+      "App\\Test\\": "test"
     }
   },
   "scripts": {
@@ -82,17 +86,12 @@
         "antidot-fw/framework",
         "antidot-fw/logger",
         "antidot-fw/dev-tools",
-        "antidot-fw/doctrine",
-        "antidot-fw/dbal-adapter",
         "antidot-fw/tactician-adapter",
         "antidot-fw/message-queue",
         "antidot-fw/cli",
-        "antidot-fw/fast-router-adapter",
         "antidot-fw/event-dispatcher",
         "antidot-fw/symfony-config-translator",
-        "wshafer/psr11-monolog",
-        "antidot-fw/antidot-react-http",
-        "antidot-fw/antidot-react-psr15"
+        "wshafer/psr11-monolog"
       ]
     }
   }

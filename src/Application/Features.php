@@ -16,17 +16,23 @@ final class Features
     ) {
     }
 
+    /**
+     * @param string|null $identity
+     * @param array<string, mixed>|null $payload
+     * @return Feature[]
+     */
     public function all(?string $identity = null, ?array $payload = null): array
     {
         $featureToggles = [];
 
         $features = $this->featureFinder->all();
+
         foreach ($features as $feature) {
             $featureToggles[] = new Feature(
                 $feature->id(),
                 $this->toggleRouter->isEnabled(
                     $feature->id(),
-                    $identity ? new Identity($identity, $payload) : null
+                    $identity ? new Identity($identity, $payload ?? []) : null
                 )
             );
         }
@@ -34,13 +40,16 @@ final class Features
         return $featureToggles;
     }
 
+    /**
+     * @param array<string, mixed>|null $payload
+     */
     public function byId(string $featureId, ?string $identity = null, ?array $payload = null): Feature
     {
         return new Feature(
             $featureId,
             $this->toggleRouter->isEnabled(
                 $featureId,
-                $identity ? new Identity($identity, $payload) : null
+                $identity ? new Identity($identity, $payload ?? []) : null
             )
         );
     }
