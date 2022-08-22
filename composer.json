@@ -32,7 +32,7 @@
     "antidot-fw/symfony-config-translator": "^1.1.0",
     "antidot-fw/yaml-config-provider": "^0.1.0",
     "drift/dbal": "^0.1.4",
-    "jetbrains/phpstorm-stubs": "^2021.3",
+    "jetbrains/phpstorm-stubs": "^2022.2",
     "laminas/laminas-diactoros": "^2.8",
     "pheature/inmemory-toggle": "^0.3.0",
     "pheature/php-sdk": "^0.3.0",
